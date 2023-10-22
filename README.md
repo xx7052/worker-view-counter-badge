@@ -1,14 +1,25 @@
 # View Counter Badge
 
-<img src = "https://view-counter.aveek.workers.dev" alt="View counter badge">
+![View counter badge](https://view-counter.jim60105.workers.dev)
 
 Count how many visitors any page gets. A simple solution to add a view counter badge to your readme files or web page.
+
+> [!Note]
+> I have rewritten this worker from KV storage to D1 storage.  
+> The main reason is that the free plan **_limits KV to 1,000 write, delete, list operations per day_**, but **_allows D1 for 100,000 rows written per day_**, and the KV limit is lower than the daily views of my site.
+>
+> **The following are the differences from upstream**
+>
+> - Change from KV storage to D1 database.
+> - Migrate project from JavaScript to TypeScript.
+> - Migrate from Service Workers to ES Modules (D1 can only works with ES Modules).
+> - Update CI workflow.
 
 ## Usage
 
 The view counter badge is meant to be deployed individually for each profile/user. Click the button and then follow the steps below to deploy your own view counter in no time!
 
-[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/aveek-saha/view-counter-badge)
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/jim60105/worker-view-counter-badge)
 
 ### Set your app name
 
@@ -98,10 +109,7 @@ Now if you push a new commit into `master` and you'll find your view counter dep
 ## Add counter to README
 
 ```html
-<img
-  src="https://<Your-cloudflare-deployment>.workers.dev"
-  alt="View counter badge"
-/>
+<img src="https://<Your-cloudflare-deployment>.workers.dev" alt="View counter badge" />
 ```
 
 OR
@@ -133,3 +141,17 @@ Example of a counter with parameters:
 ```text
 https://<Your cloudflare deployment>.workers.dev?style=classic&labelColor=black&color=green
 ```
+
+## Multiple Deployments
+
+You can deploy multiple view counters under the same GitHub account and Cloudflare account.
+
+1. Create a new git branch.
+2. Change the `name` in `wrangler.toml` to deploy on a different subdomain.
+3. Change the `CounterName` in `src/index.ts` to any other name you like.
+4. Then trigger the GitHub workflow again.
+
+## License
+
+MIT License  
+Copyright (c) 2022 Aveek Saha and 陳鈞
